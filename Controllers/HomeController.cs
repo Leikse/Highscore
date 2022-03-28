@@ -1,28 +1,41 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Highscore.Data;
+using Highscore.Models.Domain;
 using Highscore.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
-namespace Highscore.Controllers
+namespace Highscore.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    public HomeController(HighscoreContext context)
     {
-        public HomeController(HighscoreContext context)
+        Context = context;
+    }
+
+    private HighscoreContext Context { get; }
+
+    public IActionResult Index()
+    {
+        var scoreList = new List<Score>();
+
+        foreach (var item in Context.Game.ToList())
         {
-            Context = context;
+            var scores = Context.Score
+                .Include(score => score.Game)
+                .Where(score => score.Game == item)
+                .OrderByDescending(score => score.PlayerScore)
+                .FirstOrDefault();
+
+            scoreList.Add(scores);
         }
 
-        private HighscoreContext Context { get; }
-
-        public IActionResult Index()
+        var viewModel = new HomeIndexViewModel
         {
-            var highscores = Context.Score.ToList();
+            Games = Context.Game.ToList(),
+            Scores = scoreList
+        };
 
-            var viewModel = new HomeIndexViewModel
-            {
-                HighscoreDetails = highscores,
-            };
-
-            return View(viewModel);
-        }
+        return View(viewModel);
     }
 }

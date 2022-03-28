@@ -1,0 +1,19 @@
+﻿@model GamesIndexViewModel
+
+<section class="row mb-4 p-5">
+    <div class="col-6">
+        <h2 class="mb-3">@Model.Game.Name</h2>
+        <div class="mb-3">
+            @Model.Game.ReleaseYear
+            <span>, @Model.Game.Genre</span>
+        </div>
+        <div class="mb-3">
+            @Model.Game.Description
+        </div>
+    </div>
+    <img src="@Model.Game.ImageUrl"
+         class="d-block col-5"
+         alt=""/>
+</section>
+
+<partial name="_Leaderboard" for="Scores"/>

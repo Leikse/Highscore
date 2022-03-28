@@ -8,5 +8,6 @@ public class Game
     public string Genre { get; protected set; }
     public int ReleaseYear { get; protected set; }
     public Uri ImageUrl { get; protected set; }
+    public string UrlSlug { get; protected set; }
 }
 

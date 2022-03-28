@@ -1,27 +1,26 @@
 ﻿@model IEnumerable<Highscore.Models.Domain.Score>
 
-<section>
+<section class="container">
     <nav class="nav justify-content-end">
         <div class="nav-item">
-            <a class="nav-link active" href="">Registrera highscore</a>
+            <a class="nav-link active " href="">Registrera highscore</a>
         </div>
     </nav>
     <div class="col">
-
         @foreach (var score in Model)
         {
-
-            <div class="border-2">
-                <div class="row">
-                    <div class="container-fluid">
-                        <div class="col">
-                            <a href="/games/@score.UrlSlug">
-                                <h3>@score.GameName</h3>
+            <div class="container p-3">
+                <div class="border border-dark p-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="/games/@score.Game.UrlSlug" class="text-black">
+                                <h3>@score.Game.Name</h3>
                             </a>
-                            <div>@score.PlayerName, @score.Date</div>
+
+                            <div>@score.PlayerName, @score.Date.ToShortDateString()</div>
                         </div>
-                        <div class="col">
-                            <div>@score.PlayerScore</div>
+                        <div class="col-6 text-end p-2">
+                            <div class="fw-bold fs-2">@score.PlayerScore</div>
                         </div>
                     </div>
                 </div>

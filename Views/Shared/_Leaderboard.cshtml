@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Highscore.Models.Domain.Score>
+
+<section class="container">
+    <h2 class="text-center pb-3">Leaderboard</h2>
+
+    @foreach (var score in Model)
+    {
+        <div class="container pb-3">
+            <div class="border border-dark p-2">
+                <div class="row">
+                    <div class="col-6 p-2">
+                        <div>@score.PlayerName, @score.Date.ToShortDateString()</div>
+                    </div>
+                    <div class="col-6 text-end fw-bold fs-4">
+                        <div>@score.PlayerScore</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</section>

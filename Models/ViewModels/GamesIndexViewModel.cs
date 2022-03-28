@@ -2,9 +2,9 @@
 
 namespace Highscore.Models.ViewModels;
 
-public class HomeIndexViewModel
+public class GamesIndexViewModel
 {
-    public IEnumerable<Game> Games { get; set; } = new List<Game>();
+    public Game Game { get; set; }
     public IEnumerable<Score> Scores { get; set; } = new List<Score>();
 }
 
