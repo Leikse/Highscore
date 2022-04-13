@@ -1,0 +1,47 @@
+﻿@model Highscore.Models.ViewModels.CreateGameViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4 class="pt-4">Nytt spel</h4>
+
+<div class="row">
+    <div class="col-md-8 pt-2">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-6 form-group pb-3">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group pb-3">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group pb-3">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="col-5 form-group pb-3">
+                <label asp-for="Genre" class="control-label"></label>
+                <select asp-for="Genre" class="form-control" asp-items="@Model.GameItems"></select>
+                <span asp-validation-for="Genre" class="text-danger"></span>
+            </div>
+            <div class="col-4 form-group pb-5">
+                <label asp-for="ReleaseYear" class="control-label"></label>
+                <input asp-for="ReleaseYear" class="form-control" />
+                <span asp-validation-for="ReleaseYear" class="text-danger"></span>
+            </div>
+            <div class="form-group pb-5">
+                <input type="submit" value="Lägg till" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

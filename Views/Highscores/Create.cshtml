@@ -1,0 +1,41 @@
+﻿@model Highscore.Models.ViewModels.RegisterHighscoreViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h3 class="text-center p-2 pb-5">Registrera highscore</h3>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group pb-3">
+                <label asp-for="Game" class="control-label"></label>
+                <select asp-for="Game" class="form-control" asp-items="@Model.GameItems"></select>
+                <span asp-validation-for="Game" class="text-danger"></span> 
+            </div>
+            <div class="form-group pb-3">
+                <label asp-for="PlayerName" class="control-label"></label>
+                <input asp-for="PlayerName" class="form-control" />
+                <span asp-validation-for="PlayerName" class="text-danger"></span>
+            </div>
+            <div class="form-group pb-3">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group pb-5">
+                <label asp-for="PlayerScore" class="control-label"></label>
+                <input asp-for="PlayerScore" class="form-control" />
+                <span asp-validation-for="PlayerScore" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Registrera" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

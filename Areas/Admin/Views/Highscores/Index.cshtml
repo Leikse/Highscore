@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Highscore.Areas.Admin.Models.ViewModels.HighscoreViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="pt-3">Highscores</h1>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Game)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PlayerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PlayerScore)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Game)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PlayerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PlayerScore)
+        </td>
+        <td>
+            <a asp-action="Delete" asp-route-id="@item.Id">Radera</a>
+        </td>
+    </tr>
+}
+    </tbody>
+</table>

@@ -2,10 +2,10 @@
 
 public class Score
 {
-    public int Id { get; protected set; }
-    public string PlayerName { get; protected set; }
-    public DateTime Date { get; protected set; }
-    public int PlayerScore { get; protected set; }
-    public Game Game { get; protected set; }
+    public int Id { get; set; }
+    public string PlayerName { get; set; }
+    public DateTime Date { get; set; }
+    public int PlayerScore { get; set; }
+    public Game Game { get; set; }
 }
 
