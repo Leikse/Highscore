@@ -1,6 +1,6 @@
-﻿using Highscore.Data;
+﻿using Highscore.Areas.API.Models;
+using Highscore.Data;
 using Highscore.Models.Domain;
-using Highscore.Models.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,5 +31,46 @@ public class GamesController : ControllerBase
         });
 
         return gameDtos;
+    }
+
+    [HttpGet("{id}", Name = "GetGame")]
+    public ActionResult<GameDto> GetGame(int id)
+    {
+        var game = Context.Game.FirstOrDefault(x => x.Id == id);
+
+        if (game == null)
+        {
+            return NotFound();
+        }
+
+        var gameDto = new GameDto
+        {
+            Id = id,
+            Name = game.Name
+        };
+        return gameDto;
+    }
+
+    [HttpPost]
+    public IActionResult CreateGame(CreateGameDto createGameDto)
+    {
+        var game = new Game
+        {
+            Name = createGameDto.Name,
+            Description = createGameDto.Description,
+            ReleaseYear = createGameDto.ReleaseYear,
+            Genre = createGameDto.Genre,
+            ImageUrl = createGameDto.ImageUrl,
+            UrlSlug = createGameDto.Name.Replace("-", "").Replace(" ", "-").ToLower()
+        };
+
+        Context.Add(game);
+
+        Context.SaveChanges();
+
+        return CreatedAtAction(
+            nameof(GetGame),
+            new { id = game.Id },
+            null);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Highscore.Models.DTO;
+﻿namespace Highscore.Areas.API.Models;
 
 public class GameDto
 {

@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Highscore.Data;
 using Highscore.Models.Domain;
-using Highscore.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Highscore.Areas.Admin.Models.ViewModels;
 
 namespace Highscore.Areas.Admin.Controllers
 {
