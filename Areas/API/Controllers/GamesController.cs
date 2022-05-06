@@ -73,4 +73,41 @@ public class GamesController : ControllerBase
             new { id = game.Id },
             null);
     }
+
+    [HttpPut]
+    public IActionResult UpdateGame(UpdateGameDto updateGameDto)
+    {
+        var game = Context.Game.FirstOrDefault(x => x.Id == updateGameDto.Id);
+
+        if (game == null)
+        {
+            return BadRequest("Game doesn't exist");
+        }
+
+        game.Id = updateGameDto.Id;
+        game.Name = updateGameDto.Name;
+        game.Description = updateGameDto.Description;
+        game.ReleaseYear = updateGameDto.ReleaseYear;
+        game.Genre = updateGameDto.Genre;
+        game.ImageUrl = updateGameDto.ImageUrl;
+
+        Context.SaveChanges();
+
+        return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteGame(int id)
+    {
+        var game = Context.Game.FirstOrDefault(x => x.Id == id);
+
+        if (game != null)
+        {
+            Context.Game.Remove(game);
+
+            Context.SaveChanges();
+        }
+
+        return NoContent();
+    }
 }
