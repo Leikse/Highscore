@@ -1,10 +1,10 @@
-﻿using Highscore.Areas.API.Models;
+﻿using Highscore.Areas.API.V1.Models;
 using Highscore.Data;
 using Highscore.Models.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Highscore.Areas.API.Controllers;
+namespace Highscore.Areas.API.V1.Controllers;
 
 [Area("API")]
 [Route("api/[controller]")]
@@ -18,9 +18,13 @@ public class GamesController : ControllerBase
 
     private HighscoreContext Context { get; }
 
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public IEnumerable<GameDto> Index([FromQuery] string? name)
     {
-        List<Game> games = string.IsNullOrEmpty(name)
+        var games = string.IsNullOrEmpty(name)
             ? Context.Game.ToList()
             : Context.Game.Where(x => x.Name.Contains(name)).ToList();
 
@@ -33,7 +37,16 @@ public class GamesController : ControllerBase
         return gameDtos;
     }
 
+    /// <summary>
+    /// Get game by ID 
+    /// </summary>
+    /// <param name="id">Game ID</param>
+    /// <returns>Game</returns>
     [HttpGet("{id}", Name = "GetGame")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<GameDto> GetGame(int id)
     {
         var game = Context.Game.FirstOrDefault(x => x.Id == id);
@@ -52,6 +65,10 @@ public class GamesController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public IActionResult CreateGame(CreateGameDto createGameDto)
     {
         var game = new Game
@@ -75,6 +92,10 @@ public class GamesController : ControllerBase
     }
 
     [HttpPut]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public IActionResult UpdateGame(UpdateGameDto updateGameDto)
     {
         var game = Context.Game.FirstOrDefault(x => x.Id == updateGameDto.Id);
@@ -97,6 +118,9 @@ public class GamesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public IActionResult DeleteGame(int id)
     {
         var game = Context.Game.FirstOrDefault(x => x.Id == id);

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Highscore.Controllers;
 
+[ApiExplorerSettings(IgnoreApi = true)]
 public class HighscoresController : Controller
 {
     private readonly HighscoreContext _context;

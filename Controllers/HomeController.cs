@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Highscore.Controllers;
 
+[ApiExplorerSettings(IgnoreApi = true)]
 public class HomeController : Controller
 {
     public HomeController(HighscoreContext context)

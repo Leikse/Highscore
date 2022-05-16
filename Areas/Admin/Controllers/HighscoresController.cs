@@ -5,55 +5,55 @@ using Microsoft.EntityFrameworkCore;
 using Highscore.Data;
 using Highscore.Models.Domain;
 
-namespace Highscore.Areas.Admin.Controllers
+namespace Highscore.Areas.Admin.Controllers;
+
+[ApiExplorerSettings(IgnoreApi = true)]
+[Area("Admin")]
+public class HighscoresController : Controller
 {
-    [Area("Admin")]
-    public class HighscoresController : Controller
+    private readonly HighscoreContext _context;
+
+    public HighscoresController(HighscoreContext context)
     {
-        private readonly HighscoreContext _context;
+        _context = context;
+    }
 
-        public HighscoresController(HighscoreContext context)
+    // GET: Admin/Highscores
+    public async Task<IActionResult> Index()
+    {
+        var scores = _context.Score
+            .Include(x => x.Game)
+            .OrderByDescending(x => x.Game.Name)
+            .ToList();
+
+        var viewModel = new List<HighscoreViewModel>();
+
+        foreach (var item in scores)
         {
-            _context = context;
+            viewModel.Add(new HighscoreViewModel(item.Id, item.PlayerName, item.Date.ToString("yyyy-MM-dd"), item.PlayerScore, item.Game.Name));
         }
 
-        // GET: Admin/Highscores
-        public async Task<IActionResult> Index()
+        return View(viewModel);
+    }
+
+    // GET: Admin/Highscores/Delete/5
+    public async Task<IActionResult> Delete(int? id)
+    {
+        if (id == null)
         {
-            var scores = _context.Score
-                .Include(x => x.Game)
-                .OrderByDescending(x => x.Game.Name)
-                .ToList();
-
-            var viewModel = new List<HighscoreViewModel>();
-
-            foreach (var item in scores)
-            {
-                viewModel.Add(new HighscoreViewModel(item.Id, item.PlayerName, item.Date.ToString("yyyy-MM-dd"), item.PlayerScore, item.Game.Name));
-            }
-
-            return View(viewModel);
+            return NotFound();
         }
 
-        // GET: Admin/Highscores/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        var score = await _context.Score
+            .FirstOrDefaultAsync(m => m.Id == id);
+        if (score == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var score = await _context.Score
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (score == null)
-            {
-                return NotFound();
-            }
-
-            score = await _context.Score.FindAsync(id);
-            _context.Score.Remove(score);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Highscores");
+            return NotFound();
         }
+
+        score = await _context.Score.FindAsync(id);
+        _context.Score.Remove(score);
+        await _context.SaveChangesAsync();
+        return RedirectToAction("Index", "Highscores");
     }
 }

@@ -1,13 +1,13 @@
-﻿using Highscore.Areas.API.Models;
-using Highscore.Models.Domain;
+﻿using Highscore.Areas.API.V2.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace Highscore.Areas.API.Controllers;
+namespace Highscore.Areas.API.V2.Controllers;
 
+[ApiVersion("2")]
 [Route("api/[controller]")]
 [ApiController]
 public class AuthController : ControllerBase

@@ -1,4 +1,4 @@
-﻿namespace Highscore.Areas.API.Models;
+﻿namespace Highscore.Areas.API.V2.Models;
 
 public class TokenDto
 {

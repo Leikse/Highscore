@@ -1,7 +1,8 @@
-﻿namespace Highscore.Areas.API.Models;
+﻿namespace Highscore.Areas.API.V2.Models;
 
-public class CreateGameDto
+public class UpdateGameDto
 {
+    public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public int ReleaseYear { get; set; }

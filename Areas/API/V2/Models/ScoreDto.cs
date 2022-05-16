@@ -1,6 +1,6 @@
 ﻿using Highscore.Models.Domain;
 
-namespace Highscore.Areas.API.Models;
+namespace Highscore.Areas.API.V2.Models;
 
 public class ScoreDto
 {
